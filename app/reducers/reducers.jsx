@@ -1,26 +1,26 @@
-var uuid = require('uuid');
+var uuid = require('node-uuid');
 var moment = require('moment');
 
 export var searchTextReducer = (state = '', action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'SET_SEARCH_TEXT':
       return action.searchText;
     default:
       return state;
-  }
-}
+  };
+};
 
-export var toggleShowCompletedReducer = (state = false, action) => {
-  switch(action.type) {
+export var showCompletedReducer = (state = false, action) => {
+  switch (action.type) {
     case 'TOGGLE_SHOW_COMPLETED':
       return !state;
     default:
       return state;
   }
-}
+};
 
 export var todosReducer = (state = [], action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'ADD_TODO':
       return [
         ...state,
@@ -32,11 +32,9 @@ export var todosReducer = (state = [], action) => {
           completedAt: undefined
         }
       ];
-    // add case for toggle todos
     case 'TOGGLE_TODO':
       return state.map((todo) => {
         if (todo.id === action.id) {
-          console.log(action.id);
           var nextCompleted = !todo.completed;
 
           return {
@@ -48,7 +46,12 @@ export var todosReducer = (state = [], action) => {
           return todo;
         }
       });
+    case 'ADD_TODOS':
+      return [
+        ...state,
+        ...action.todos
+      ];
     default:
       return state;
-    }
-}
+  }
+};
